@@ -14,7 +14,8 @@ class ProjectController extends Controller
      */
     public function index()
     {
-        return view('projects.index')->withProjects((Project::all(['id', 'title'])));
+        $projects = Project::all(['id', 'title']);
+        return view('projects.index')->withProjects($projects);
     }
 
     /**
@@ -51,7 +52,7 @@ class ProjectController extends Controller
      */
     public function show(Project $project)
     {
-        //
+        return view('projects.show')->withProject($project);
     }
 
     /**
@@ -62,7 +63,7 @@ class ProjectController extends Controller
      */
     public function edit(Project $project)
     {
-        //
+        return view('projects.edit')->withProject($project);
     }
 
     /**
@@ -74,7 +75,12 @@ class ProjectController extends Controller
      */
     public function update(Request $request, Project $project)
     {
-        //
+        $project->update($request->validate([
+            'title' => 'required|min:3|max:255',
+            'description' => 'required|min:3'
+        ]));
+
+        return redirect('/projects/'.$project->id);
     }
 
     /**
@@ -85,6 +91,7 @@ class ProjectController extends Controller
      */
     public function destroy(Project $project)
     {
-        //
+        $project->delete();
+        return redirect('/projects');
     }
 }
