@@ -14,12 +14,9 @@ class Project extends Model
         return $this->hasMany(Task::class);
     }
 
-    public function addTask($task)
+    public function addTask($request)
     {
-        $this->validate($task, [
-            'description' => 'required'
-        ]);
-
-        $this->tasks()->create($task);
+        dd($request);
+        $this->tasks()->create($request);
     }
 }
