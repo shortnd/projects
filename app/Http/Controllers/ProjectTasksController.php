@@ -10,19 +10,16 @@ class ProjectTasksController extends Controller
 {
     public function store(Request $request, Project $project)
     {
-        $request->validate(['description' => 'required|max:255|min:3']);
-
-        $project->addTask($request->description);
+        $project->addTask($request->validate([
+            'description' => 'required|min:3|max:255'
+        ]));
 
         return back();
     }
 
     public function update(Task $task, Request $request)
     {
-        $task->update([
-            'completed' => $request->has('completed')
-        ]);
-
+        $request->has('completed') ? $task->complete() : $task->incomplete();
         return back();
     }
 }
