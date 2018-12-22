@@ -10,10 +10,11 @@ class ProjectTasksController extends Controller
 {
     public function store(Request $request, Project $project)
     {
-        $project->addTask($this->validate($request, [
-            'description' => 'required'
-        ]));
-        // return back();
+        $request->validate(['description' => 'required|max:255|min:3']);
+
+        $project->addTask($request->description);
+
+        return back();
     }
 
     public function update(Task $task, Request $request)

@@ -35,7 +35,7 @@
                 @csrf
                 <div class="form-group">
                     <label for="description">New Task</label>
-                    <textarea name="description" rows="10" class="form-control">{{ old('description') }}</textarea>
+                    <input name="description" class="form-control {{ ($errors->has('description')) ? 'is-invalid' : '' }}" type="text" value="{{ old('description') }}" />
                     @if($errors->has('description'))
                         <small class="text-danger">{{ $errors->first('description') }}</small>
                     @endif
