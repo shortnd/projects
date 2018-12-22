@@ -14,10 +14,10 @@
 Route::get('/', function () {
     return view('welcome');
 });
-Route::resource('projects', 'ProjectController');
 Auth::routes();
-
-Route::post('/projects/{project}/tasks', 'ProjectTasksController@store');
+Route::resource('projects', 'ProjectController');
+Route::post('/completed-tasks/{task}', 'CompletedTasksController@store');
+Route::delete('/completed-tasks/{task}', 'CompletedTasksController@destroy');
 Route::patch('/tasks/{task}', 'ProjectTasksController@update');
 
 Route::get('/home', 'HomeController@index')->name('home');

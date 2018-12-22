@@ -19,9 +19,11 @@
         @if($project->tasks->count())
             <div class="card-header">
                 @foreach ($project->tasks as $task)
-                <form action="/tasks/{{ $task->id }}" method="post">
+                <form action="/completed-tasks/{{ $task->id }}" method="post">
                     @csrf
-                    @method('PATCH')
+                    @if($task->completed)
+                        @method('DELETE')
+                    @endif
                     <label for="completed" class="{{ $task->completed ? 'is-completed' : '' }}">
                         <input type="checkbox" name="completed" onchange="this.form.submit()" {{ $task->completed ? 'checked' : '' }}>
                         {{ $task->description }}
